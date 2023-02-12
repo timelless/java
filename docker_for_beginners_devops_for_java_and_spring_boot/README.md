@@ -79,3 +79,13 @@ Dockerfile is not needed for JIB
 * docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=todos-user --env MYSQL_PASSWORD=dummytodos --env MYSQL_DATABASE=todos --name mysql --publish 3306:3306 --network=web-applicatoin-mysql-network  mysql:5.7
 * docker container run -d -p 8080:8080 --network=web-applicatoin-mysql-network -e RDS_HOSTNAME=mysql in28min/todo-web-application-mysql:0.0.1-SNAPSHOT
 * docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=todos-user --env MYSQL_PASSWORD=dummytodos --env MYSQL_DATABASE=todos --name mysql --publish 3306:3306 --network=web-applicatoin-mysql-network --volume mysql-database-volume:/var/lib/mysql  mysql:5.7
+
+
+## Section 7: Docker with Java Spring Boot React Full Stack Application
+
+* .dockerignore
+* multi-stage builds - noting is done locally
+* docker-compose scale is now deprecated. Instead, you can use docker-compose up -d --scale servicename=3
+
+
+## Section 8: Docker - Run Java Spring Boot Microservices
