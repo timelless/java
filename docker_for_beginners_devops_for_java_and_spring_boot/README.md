@@ -89,3 +89,16 @@ Dockerfile is not needed for JIB
 
 
 ## Section 8: Docker - Run Java Spring Boot Microservices
+
+* docker network create currency-network
+* docker run -d -p 8100:8100 --network=currency-network --name=currency-conversions-service in28min/currency-conversion-service:0.0.1-SNAPSHOT
+* docker run -d -p 8100:8100 --network=currency-network --name=currency-conversions-service --env CURRENCY_EXCHANGE_URI=http://currency-exchange-service:8000 in28min/currency-conversion-service:0.0.1-SNAPSHOT
+
+## Section 9: Using Docker to Integrate Java Microservices with Eureka Naming Server
+* used for load balancing
+
+## Section 10: Using Docker to Integrate Java Microservices with Zuul API Gateway
+* used as api gateway
+
+## Section 11: Using Docker to Integrate Java Microservices with Zipkin
+* distributed testing
