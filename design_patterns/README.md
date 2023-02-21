@@ -36,3 +36,25 @@ src/main/java/com/coffeepoweredcrew/prototype
 * When creation is costly
 * Making copies, not instances from scratch
 * Deep copy & shallow copy
+
+### Abstract factory
+```
+src/main/java/com/coffeepoweredcrew/abstractfactory2
+```
+* Used when we have 2 or more objects that works together
+* Intent is to isolate the client code from these objects and their creation
+* Strat games example
+* Uses Factory method design pattern
+* We can implement singletons
+
+### Singleton
+```
+src/main/java/com/coffeepoweredcrew/singleton
+```
+* Constructor is not accessible globally
+* Subclassing/inheritance is not allowed
+* Keeping track of the instance
+* Give access to the instance with a public method
+* Eager singleton - create the instance as soon as the class is loaded
+* Lazy singleton - create the instance on demand
+* !! synchronized & volatile
