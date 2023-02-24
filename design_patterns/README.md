@@ -58,3 +58,60 @@ src/main/java/com/coffeepoweredcrew/singleton
 * Eager singleton - create the instance as soon as the class is loaded
 * Lazy singleton - create the instance on demand
 * !! synchronized & volatile
+* Difficult for unit tests
+
+### Object pool
+```
+src/main/java/com/coffeepoweredcrew/objectbool
+```
+* If cost of creating an instance is high or we need a lot of such object for short period of time
+* Ways to implement: pre-create object or cache unused instances
+* Reset should not be a costly operation
+* Cached objects improve the performance but increase memory consumption and startup time
+* If reset is too long move it from synchronized context since it block the pool
+* Don't pool any long live objects (used by the client for a long time)
+* Used for external resources like threads and connections
+
+## Section 11 - 18: Structural Design Patterns
+### Adapter
+```
+src/main/java/com/coffeepoweredcrew/adapter
+```
+* Make existing object work with client by adapting the object to the interface used by the client
+* Also called wrapper as it wraps the exising object
+* Two variation - class and object adapter
+
+### Bridge
+```
+src/main/java/com/coffeepoweredcrew/bridge
+```
+* We can decouple our implementation and abstraction
+* Implemented by creating two separate inheritance hierarchies - one for implementation and one for abstraction
+* The hierarchies are connected by composition
+* If we have single implementor we can skip this
+* Suitable if abstraction can decide which implementor to use
+* Provides gret extensibility, build & package separately
+* Can be used with abstract factory design pattern
+* It is hard to implement if implementation is already is complete
+
+### Decorator
+```
+src/main/java/com/coffeepoweredcrew/decorator
+```
+* When we want no enhance object behaviour at runtime
+* It wraps the object whom we want to enhance and then in provided the exact same interface as the object
+* It can add new methods on top of already exising ones
+* Avoid large state in base classes or components
+* Pay attention to equals or hashCode
+
+### Composite
+```
+src/main/java/com/coffeepoweredcrew/composite
+```
+* If we have tree structure, or part-whole relationship (multiple objects create another one)
+* Create object in tree structure
+* Not the simple composition known from OOP
+
+### Facade
+### Flywieght
+### Proxy
