@@ -72,6 +72,7 @@ src/main/java/com/coffeepoweredcrew/objectbool
 * Don't pool any long live objects (used by the client for a long time)
 * Used for external resources like threads and connections
 
+
 ## Section 11 - 18: Structural Design Patterns
 ### Adapter
 ```
@@ -113,5 +114,30 @@ src/main/java/com/coffeepoweredcrew/composite
 * Not the simple composition known from OOP
 
 ### Facade
-### Flywieght
+```
+src/main/java/com/coffeepoweredcrew/facade
+```
+* If we have client code which interacts with large number of classes in a subsystems
+* Facade provides a simple interface to a subsystem
+* Not one to one method forwarding
+* Minimize the complexity of a subsystem
+* Great to simplify dependencies
+* Simplify the work of client with a subsystem
+* Encapsulate the interaction
+
+### Flyweight
+```
+src/main/java/com/coffeepoweredcrew/flyweight
+```
+* If we have client code which interacts with large number of classes in a subsystems
+* Allows us to share object to multiple contexts. Instrinct (shared in every context) & extrinct (context specific state)
+* Factory is always necessary as client code need a center place where to ask for a shared flyweight object. Instances could be quite large and we need central place to store them.
+* Instrinct should always be immutable.
+
 ### Proxy
+* Placeholder or surrogate to another object (replace it)
+* Protection proxy, remote proxy, virtual proxy
+* Client is unaware for proxy existing
+
+
+## Section 19 - 31: Behavioral Design Patterns
