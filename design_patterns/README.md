@@ -135,9 +135,104 @@ src/main/java/com/coffeepoweredcrew/flyweight
 * Instrinct should always be immutable.
 
 ### Proxy
+```
+src/main/java/com/coffeepoweredcrew/proxy
+```
 * Placeholder or surrogate to another object (replace it)
 * Protection proxy, remote proxy, virtual proxy
 * Client is unaware for proxy existing
 
 
 ## Section 19 - 31: Behavioral Design Patterns
+### Chain of Responsibility
+```
+src/main/java/com/coffeepoweredcrew/chainofresponsibility
+```
+* When we need to avoid coupling between code who sends the request and the code who handles it (functionality)
+* Object are chained together
+* If object can't handle the request passes it to the next in the chain
+* Handling the request is not guaranteed
+* Client uses only the first object in the chain
+* Always prefer interfaces
+
+### Command
+```
+src/main/java/com/coffeepoweredcrew/command
+```
+* Represent request or method call as an object
+* Advantage is we can send the object to a different parts of the application or just to store it
+* Support or "undo" & "redo"
+* Error handling is difficult to implement
+
+### Interpreter
+```
+src/main/java/com/coffeepoweredcrew/interpreter
+```
+* Used when we want to process a simple "language" with rules and grammar
+* - File access requires user role and admin role
+
+### Mediator
+```
+src/main/java/com/coffeepoweredcrew/mediator
+```
+* We can use it when we have a group of objects which communicate with each other
+* Remove the complexity between object interaction
+* All the objects will now only the mediator
+* Only mediator has collection with the other objects
+* !! colleagues.stream().filter(c-> c != control).forEach(c->c.controlChanged(control));
+* !! .addListener((v, o, n) -> {
+* Coupled with the concrete implementations unlike Observer
+* Observer is for one to many communication only
+
+### Iterator
+```
+src/main/java/com/coffeepoweredcrew/iterator
+```
+* When we have aggregate objects (with collection) and we want ot give access to these elements (inside the aggregation/collection)
+* Iterators are stateful
+
+### Momento
+```
+src/main/java/com/coffeepoweredcrew/momento
+```
+* When we want to store object state and nobody can modify/ead it
+
+### Observer
+```
+src/main/java/com/coffeepoweredcrew/observer
+```
+* Notify multiple objects that a state is changed (observers)
+* One to many communication process
+* We don't know wash is changed, just that something is changed
+
+### State
+```
+src/main/java/com/coffeepoweredcrew/state
+```
+* Allows object to behave differently based in its external state
+* This pattern allows ti define state specific behaviours in separated classes
+* We don't modify the object when defining new states
+
+### Strategy
+```
+src/main/java/com/coffeepoweredcrew/strategy
+```
+* Allows us to encapsulate an algorithm in a class
+
+### Template method
+```
+src/main/java/com/coffeepoweredcrew/templatemethod
+```
+* Define an algorithm in a method as a series of steps. Each stem is a method call and the method is defined as abstract method in the same class
+
+### Visitor
+```
+src/main/java/com/coffeepoweredcrew/visitor
+```
+* Allows us to define new operations for object without changing the class definition
+
+### Null object
+```
+src/main/java/com/coffeepoweredcrew/nullobject
+```
+* We use null as absence of value of object. Using this pattern we do not have to make null checks
