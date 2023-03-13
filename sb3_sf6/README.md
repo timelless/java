@@ -143,3 +143,68 @@ In pom.xml
 
 
 ## Section 5: Getting Started with Spring Boot
+```
+./springboot-test
+```
+* Setting up Spring porjects before Spring boot awas not easy
+* A lot of thing to configure - dependenies, web.xml, spring configuration, NFRs (loggin, monitoring, error handling)
+
+* Spring boot goal is production-ready application quickly
+* - Spring boot initilizr
+* - Spring boot starter projects
+* - Spring boot auto configuraion
+* - Spring boot dev tools
+* Production ready
+* - Logging
+* - Different configuration for different environtments (profiles)
+* - Monitoring (Spring boot actuator)
+
+### Spring boot starter projects
+* Provide all the dependencies needed (dependency descriptions)
+* - Spring boot starter web
+* - Spring boot starter test
+* - Spring boot starter data JPA
+* - Spring boot starter data JDBC
+* - Spring boot starter security
+
+### Spring boot  auto configuraion
+* Auto configuration located in Spring boot auto configuration jar(s)
+* logging.level.org.springframework=debug, default logging level is info
+* CONDITIONS EVALUATION REPORT (in log)
+* - Positive matches - were auto configured
+* - Negative matches - did not get auto configured
+
+### Spring boot dev tools
+* Helps with not restarting the server for example
+
+### Production ready
+* application-dev.properties
+* application-prod.properties
+
+### Embeded servers
+* The server is already a part of the jar file
+* clean install
+
+### Spring boot actuator (monitoring)
+* http://localhost:8080/actuator
+
+### Spring boot vs Spring MVC vs Spring
+* Sprintg framework - dependency injetion (@Component)
+* Spring MVC - spring module for web apps and REST (@Controller, @RequestMapping)
+* Spring project - quick build for prod ready env. (eliminate configuration of Spring, Spring MVC)
+* Spring boot is a wrapper for Spring and Spring MVC
+* @SpringBootApplication annotation is a combination of 3 annotations: @SpringBootConfiguration + @EnableAutoConfiguration + @ComponentScan
+
+## Section 6: Getting Started with JPA and Hibernate with Spring and Spring Boot
+```
+./jpa-hiberate
+```
+* CommandLineRunner - execute commands on app boot
+* new BeanPropertyRowMapper<> (Course.class)
+* @PersistenceContext
+* JPA - maps entities to tables
+
+## Hibernate vs JPA
+* JPA defines specifications
+* Hibernate in implemenation of JPA (the most popular)
+* Use Hiberante jar but JPA imports!
