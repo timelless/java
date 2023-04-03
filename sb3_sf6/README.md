@@ -208,3 +208,8 @@ In pom.xml
 * JPA defines specifications
 * Hibernate in implemenation of JPA (the most popular)
 * Use Hiberante jar but JPA imports!
+
+## Section 7: Build Java Web Application with Spring Framework, Spring Boot and Hibernate
+```
+./restful
+```
