@@ -146,8 +146,7 @@ com.xmlc
 * Data access - JDBC, JPA
 * Integrate other applications - JMS etc
 * Testing - mock objects, Spring MVC Test etc
-
-##### Projects=
+##### Projects
 * Spring framework
 * Spring security
 * Spring data
@@ -160,8 +159,8 @@ com.xmlc
 ```
 ./springboot-test
 ```
-* Setting up Spring porjects before Spring boot awas not easy
-* A lot of thing to configure - dependenies, web.xml, spring configuration, NFRs (loggin, monitoring, error handling)
+* Setting up Spring porjects before Spring boot was not easy
+* A lot of things to configure - dependenies, web.xml, spring configuration, NFRs (loggin, monitoring, error handling)
 
 * Spring boot goal is production-ready application quickly
 * - Spring boot initilizr
@@ -172,7 +171,6 @@ com.xmlc
 * - Logging
 * - Different configuration for different environtments (profiles)
 * - Monitoring (Spring boot actuator)
-
 ### Spring boot starter projects
 * Provide all the dependencies needed (dependency descriptions)
 * - Spring boot starter web
@@ -180,28 +178,22 @@ com.xmlc
 * - Spring boot starter data JPA
 * - Spring boot starter data JDBC
 * - Spring boot starter security
-
 ### Spring boot  auto configuraion
 * Auto configuration located in Spring boot auto configuration jar(s)
 * logging.level.org.springframework=debug, default logging level is info
 * CONDITIONS EVALUATION REPORT (in log)
 * - Positive matches - were auto configured
 * - Negative matches - did not get auto configured
-
 ### Spring boot dev tools
 * Helps with not restarting the server for example
-
 ### Production ready
 * application-dev.properties
 * application-prod.properties
-
 ### Embeded servers
 * The server is already a part of the jar file
 * clean install
-
 ### Spring boot actuator (monitoring)
 * http://localhost:8080/actuator
-
 ### Spring boot vs Spring MVC vs Spring
 * Sprintg framework - dependency injetion (@Component)
 * Spring MVC - spring module for web apps and REST (@Controller, @RequestMapping)
@@ -225,5 +217,13 @@ com.xmlc
 
 ## Section 7: Build Java Web Application with Spring Framework, Spring Boot and Hibernate
 ```
-./restful
+./web
 ```
+* Model 1 arch. - all the logic is in JSPs
+* Model 2 arch. - Model, View, Controller (Servlets)
+* Model 2 arch. with front controller - Model, View, Controller (Servlets)zzzzzzz
+* Disaatcher servlet - MVC spring implemenation of front controller pattern
+* All the request are received by the front controller (View resolver to get the correct view)
+
+* Command bean (form backing object) - use a bean to get for param wihout @RequestParam
+* Spring will automatically created tables for all entities if h2 dependency is detected
