@@ -226,4 +226,87 @@ com.xmlc
 * All the request are received by the front controller (View resolver to get the correct view)
 
 * Command bean (form backing object) - use a bean to get for param wihout @RequestParam
-* Spring will automatically created tables for all entities if h2 dependency is detected
+* Springboot will automatically created tables for all entities if h2 dependency is detected
+
+## Section 8: Creating a Java REST API with Spring Boot, Spring Framework and Hibernate
+```
+./restful
+```
+* Request goes to dispatcher servlet
+* Dispatcher servlet is configured by ...AutoConfiguration
+* Auto convert response to json - @ResponseBody + JacksonHttpMessageConverters - defualt conversion
+* Error mapping is configured by ErrorMvcAutoConfiguration
+* HATEOAS & HAL - api links (in response). EntityModel and WebMVC link builder
+!! static import
+* Jackson - most popular JSON serialization framework for java
+* Actuator - monitor your appliction; path = /actruator
+* Spring boot HAL explorer; path = /
+
+## Section 9: Building Java Full Stack Application with Spring Boot and React
+```
+./withreact/fend/components/learn
+```
+* Babel - used for backward compatibility
+
+## Section 10: Exploring React Components with Counter Example
+```
+./withreact/fend/components/counter
+```
+... abandoned
+
+## Section 11: Building Java Todo Full Stack Application with Spring Boot and React
+
+## Section 12: Connecting Spring Boot REST API with React Frontend - Java Full Stack App
+
+## Section 13: Connecting Java Full Stack Application(Spring Boot & React) with JPA & Hibernate
+
+## Section 14: Exploring Unit Testing with JUnit
+```
+./junittest
+```
+* Deploy the complete application and test - integration/ssytem test
+* Unit test - test specific method or gropup of methods, class
+
+## Section 15: Exploring Mocking with Mockito for Spring Boot Projects
+```
+./mockitodemo
+```
+* Stubs
+* Mocks
+
+## Section 16: Securing Spring Boot Applications with Spring Security
+```
+./security
+```
+* csrf token
+* same site cookie
+* cors - global & local config (per controller)
+
+## Section 17: Learning Spring AOP with Spring Boot (Aspected oriented programming)
+```
+./aop
+```
+* Spring AOP - only for beans
+* AspectJ - complete AOP solution
+
+## Section 18: Learning Maven with Spring and Spring Boot
+* Creating new Projects
+* Managin dependencies
+* Build jar file
+* Run appllication locally
+* Run unit tests
+* Deploy to a test environment
+* Transitive dependencies
+* parent pom
+* help:effective-pom - shows all the dependencies
+* mvn build dependency:tree
+* Build  lifecycle - validate, compile, test, package, integration tests, verify, install, deploy
+* mvn build install
+* Maven uses convention over configuration
+
+## Section 19: Learning Gradle with Spring and Spring Boot
+
+## Section 20: Learning Docker with Spring and Spring Boot
+
+## Section 21: Getting Started with Cloud and AWS
+...
