@@ -2,6 +2,8 @@ package com.example.security.todo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public class TodoResource {
             new Todo("vasilk", "2nd todo description")
     );
 
+//    @PreAuthorize("hasRole('USER') and #uysername == authentication.name")
+//    @PostAuthorize("returnObject.username == 'vasilk'")
     @GetMapping(path = "/todos")
     public List<Todo> retrieveTodos() {
         return TODOS;
