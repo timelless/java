@@ -268,3 +268,4 @@ A socket is one endpoint of two-way connection, the client have a socket and the
 Closing a server socket does not close opened connections, it just forbids (do not accept) new ones.  
 ServerSocket vs ServerCannel - servers socket is blocking i/o channel is not, socket requires 1 thread per client connection channel handles multiple client connections efficiently, socket is less scalable for large number of concurrent connections channel is highly scalable, socket uses tcp channels tcp or any NIO-compatible protocol.  
 Polling vs event driven - polling  check for changes at regular intervals, event driven reacts to specific events.  
+WebSockets establish a connection via http handshake.  
