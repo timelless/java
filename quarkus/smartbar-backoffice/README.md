@@ -100,13 +100,15 @@ public class MockCategoriesServiceDeprecated extends CategoriesService {
 }
 ```
 
+After we add hibernate and postgres dependencies since we did not configure anything hibernate extension autoconfigures the database connections and starts proper docket container, this capability is called dev service. 
+It is like this because of 2 things: we did include JDBC data source and second we did not configure JDBC url. Only available on dev/test  mode.  
+When nothing is defined quarkus creates the schema based on entity annotations.  
 
+Default profiles - dev, test (8081) & prod (when no other profiles are active).  
+How to run in prod - 1) mvn clean package build 2) run quarkus-run.jar from target.  
 
- 
+Runtime prop - evaluated at runtime, build time properties - evaluated while build time and have no relevance when running the application, interssection of these could exist. Build time cannot be change or overiden at runtime.  
 
-
-
-
-
+Panache - additional layer of abstraction above JPA which aims to further ease the use of JPA. Implements active record pattern and repository pattern (so EM is not used).  
 
 

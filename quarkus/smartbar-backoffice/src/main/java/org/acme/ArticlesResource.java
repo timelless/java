@@ -1,47 +1,100 @@
 package org.acme;
 
+import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Article;
+import org.acme.entity.Article;
+import org.acme.entity.Category;
+import org.acme.model.ApiArticle;
 import org.acme.service.ArticlesService;
+import org.acme.service.CategoriesService;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
-@NonBlocking
 public class ArticlesResource implements ArticlesApi {
 
     private final ArticlesService articlesService;
 
+    private final CategoriesService categoriesService;
+
     @Inject
-    public ArticlesResource(ArticlesService articlesService) {
+    public ArticlesResource(ArticlesService articlesService, CategoriesService categoriesService) {
         this.articlesService = articlesService;
+        this.categoriesService = categoriesService;
     }
 
-
     @Override
-    public Response articlesArticleIdDelete(String articleId) {
+    @Blocking
+    public Response articlesArticleIdDelete(Long articleId) {
+        final Optional<Article> article = articlesService.deleteById(articleId);
+        if (article.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok().build();
     }
 
     @Override
-    public Response articlesArticleIdGet(String articleId) {
-        return Response.ok(articlesService.get()).build();
+    @Blocking
+    public Response articlesArticleIdGet(Long articleId) {
+        final Optional<Article> article = articlesService.getById(articleId);
+        if (article.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(mapArticleToApiArticle(article.get())).build();
     }
 
     @Override
-    public Response articlesArticleIdPut(String articleId, Article article) {
+    @Blocking
+    public Response articlesArticleIdPut(Long articleId, ApiArticle apiArticle) {
+        final Optional<Article> existingArticle = articlesService.getById(articleId);
+        if (existingArticle.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        final Article article = existingArticle.get();
+        mapApiArticleToArticle(apiArticle, article);
+        articlesService.update(article);
         return Response.ok().build();
     }
 
     @Override
+    @Blocking
     public Response articlesGet() {
-        return Response.ok(List.of(articlesService.get())).build();
+        final List<Article> articles = articlesService.listAll();
+        return Response.ok(articles.stream().map(this::mapArticleToApiArticle).toList())
+                .build();
     }
 
     @Override
-    public Response articlesPost(Article article) {
-        return Response.created(URI.create("todo")).build();
+    @Blocking
+    public Response articlesPost(Long xCategoryId, ApiArticle apiArticle) {
+        final Optional<Category> category = categoriesService.getById(xCategoryId);
+        if(category.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        final Article article = new Article();
+        mapApiArticleToArticle(apiArticle, article);
+        article.setCategory(category.get());
+        final Article persitedArticle = articlesService.persit(article);
+        return Response.created(URI.create("/articles/" + persitedArticle.getId())).build();
+    }
+
+    private void mapApiArticleToArticle(ApiArticle apiArticle, Article article) {
+        article.setName(apiArticle.getName());
+        article.setDescription(apiArticle.getDescription());
+        article.setPrice(apiArticle.getPrice());
+        article.setPictureBase64(apiArticle.getPicture());
+    }
+
+    private ApiArticle mapArticleToApiArticle(Article article) {
+        final ApiArticle apiArticle = new ApiArticle();
+        apiArticle.setDescription(article.getDescription());
+        apiArticle.setName(article.getName());
+        apiArticle.setPicture(article.getPictureBase64());
+        apiArticle.setPrice(article.getPrice());
+        apiArticle.setId(article.getId());
+        return apiArticle;
     }
 }

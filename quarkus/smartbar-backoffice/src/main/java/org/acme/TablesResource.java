@@ -1,47 +1,77 @@
 package org.acme;
 
+import io.smallrye.common.annotation.Blocking;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Table;
+import org.acme.entity.Table;
+import org.acme.mapper.TableMapper;
+import org.acme.model.ApiTable;
 import org.acme.service.TablesService;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
-@NonBlocking
 public class TablesResource implements TablesApi {
 
     private final TablesService tablesService;
+    private final TableMapper mapper;
 
     @Inject
-    public TablesResource(TablesService tablesService) {
+    public TablesResource(TablesService tablesService, TableMapper mapper) {
         this.tablesService = tablesService;
-    }
-
-
-    @Override
-    public Response tablesTableIdDelete(String articleId) {
-        return Response.ok().build();
+        this.mapper = mapper;
     }
 
     @Override
-    public Response tablesTableIdGet(String tableId) {
-        return Response.ok(tablesService.get()).build();
-    }
-
-    @Override
-    public Response tablesTableIdPut(String tableId, Table table) {
-        return Response.ok().build();
-    }
-
-    @Override
+    @Blocking
     public Response tablesGet() {
-        return Response.ok(List.of(tablesService.get())).build();
+        final List<Table> tables = tablesService.listAll();
+        return Response.ok(tables.stream().map(mapper::mapToApiTable).toList())
+                .build();
     }
 
     @Override
-    public Response tablesPost(Table table) {
-        return Response.created(URI.create("todo")).build();
+    @Blocking
+    public Response tablesPost(ApiTable apiTable) {
+        final Table table = new Table();
+        mapper.mapToTable(apiTable, table);
+        final Table persitedTable = tablesService.persit(table);
+        return Response.created(URI.create("/tables/" + persitedTable.getId())).build();
+    }
+
+    @Override
+    @Blocking
+    public Response tablesTableIdDelete(Long tableId) {
+        final Optional<Table> table = tablesService.deleteById(tableId);
+        if (table.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().build();
+    }
+
+    @Override
+    @Blocking
+    public Response tablesTableIdGet(Long tableId) {
+        final Optional<Table> table = tablesService.getById(tableId);
+        if (table.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(mapper.mapToApiTable(table.get())).build();
+    }
+
+    @Override
+    @Blocking
+    public Response tablesTableIdPut(Long tableId, ApiTable apiTable) {
+        final Optional<Table> existingTable = tablesService.getById(tableId);
+        if (existingTable.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        final Table table = existingTable.get();
+        mapper.mapToTable(apiTable, table);
+        tablesService.update(table);
+        return Response.ok().build();
     }
 }
