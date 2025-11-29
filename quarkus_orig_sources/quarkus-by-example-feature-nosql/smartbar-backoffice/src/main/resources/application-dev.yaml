@@ -1,0 +1,17 @@
+quarkus:
+  datasource:
+    username: bob
+    password: bob
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/smartbarbo
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+  oidc:
+    auth-server-url: http://localhost:7070/realms/sbo
+    client-id: smartbar-backoffice
+    application-type: hybrid
+    token-state-manager:
+      split-tokens: true
+    roles:
+      source: accesstoken

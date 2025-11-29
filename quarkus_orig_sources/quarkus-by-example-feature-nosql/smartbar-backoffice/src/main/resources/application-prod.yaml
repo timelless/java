@@ -1,0 +1,14 @@
+quarkus:
+  datasource:
+    username: bob
+    password: bob
+    jdbc:
+      url: jdbc:postgresql://${db-host}:5432/smartbarbo
+  oidc:
+    auth-server-url: http://${keycloak-host}:8080/realms/sbo
+    client-id: smartbar-backoffice
+    application-type: hybrid
+    token-state-manager:
+      split-tokens: true
+    roles:
+      source: accesstoken

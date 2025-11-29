@@ -1,0 +1,28 @@
+### Create new
+POST {{url}}/tables
+Content-Type: application/json
+
+{
+  "name": "Madrid",
+  "seatCount": 4,
+  "active": false
+}
+
+### Modify
+PUT {{url}}/tables/1
+Content-Type: application/json
+
+{
+  "name": "costa-rica",
+  "seatCount": 10,
+  "active": true
+}
+
+### Get all
+GET {{url}}/tables
+
+### Get single
+GET {{url}}/tables/3000
+
+### Delete
+DELETE {{url}}/tables/1

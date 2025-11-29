@@ -1,0 +1,4 @@
+quarkus:
+  rest-client:
+    de.schulte.smartbar.orderclient.login.MenuApiClient:
+      url: "http://localhost:8088"
