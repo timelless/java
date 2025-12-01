@@ -110,5 +110,73 @@ How to run in prod - 1) mvn clean package build 2) run quarkus-run.jar from targ
 Runtime prop - evaluated at runtime, build time properties - evaluated while build time and have no relevance when running the application, interssection of these could exist. Build time cannot be change or overiden at runtime.  
 
 Panache - additional layer of abstraction above JPA which aims to further ease the use of JPA. Implements active record pattern and repository pattern (so EM is not used).  
+When using PanacheEntity quarkus will rewrite this accessor access to ensure encapsulation and that information is hidden at runtime.  
+Quarkus panache mock is need fo testing.  
+If we do not like panache active record (extend PanacheEntity) pattern we can use repository pattern (implements PanacheRepository) (repository is needed to manage the entities).  
+With repository patter you are mainly change the repository class, with active record you mainly change your entity.  
+With extension rest resources with for hibernate orm - we can automatically expose implemented repository methods as rest endpoints.  
+Implement PanacheRepositoryResource or PanacheEntityResource based on if we use repository patter or active record pattern.  
+@ResourceProperties on top of Resource interface.  
+For transactional  resources like entity manager - those calls can only be executed on a worker thread. 
+We can use Hibernate ORM in reactive mode with different extensions but only db client is available in stable mode (quarkus reactive pg client).  
+
+Application is protected by Quarkus security manager - it is activated before every request, it lands first here. Security manager looks first for configured http auth mechanism could be basic auth, jwt or else. 
+Actual auth is delegated to identity provider - it gets extracted creds and performs actual auth - look on DB, using dedicated entity provider, if it fails - it goes back to htt auth mechanism which then generates a challenge for the user and returns back without letting the user access the requesed resource. 
+On success identity provider makes security identity - it carries verified details also security rules relevant for security  checks.  
+Security manager check by security identity if the user is allowed (authorized) to access the requested resource.  
+After login  we have quarkus-credentials cooke that stores encrypted user credentials, quarkus do not work with sessions on server side for security reasons quarkus generates new cookies in background on some interval (each min?).  
+
+
+When building for prod - quarkus-app - the dir with final build result, quarkus-run.jar is runnable.   
+Running the app java jar ...quarkus-run.jar  
+
+
+Run in a docker image (JVM docker image). Target env is container runtime (like docker).  
+Dockerfile.jvm - builds a container with a jvm inside which will run the app
+legacy-jar - legacy
+Docker.native - run a native image of the application
+native-micro - same approach but smaller image.  
+In pom files - exec-maven-plugin is added to perform docker build from exactly that scene docker file. (run mvn clean install)  
+
+Native image with GraalVM
+Documentation > build native executable -> build native image w/o graalvm installed  
+
+Quarkus CLI - create quarkus application (similar to maven and gradle).  
+
+
+Http clients - Java http client, Apache http client, JaxRs, MicroProfile client
+
+With @Retry - quarkus will retry http request up to 3 times without any delay.
+
+Quarkus cache - extension for cache. @CacheResult  annotation. It does not ship with quarkus core. Caching is applied on non-private methods.   
+Quarkus creates cache key by using method arguments by default. If there is just 1 String argument key will be argument value for example.  
+If no arguments in method Quarkus will use default cache key, if > 1 arguments - Quarkus will use composite cache key. Equals and hash code is used.  
+Cache invalidation - action based approach or time based approach. Annotate non-private method with @CacheInvalidate - will use the same generator strategy and method invocation is executed.  
+@CacheInvalidateAll - invalidate all, no methods argument must be presented - method body could be empty. This is action based invalidation.  
+
+For Time based invalidations - we need to add entry configuration (expire after access, expire after write...). Default cache provider is Caffeine.  
+Caching concurrency - lockTimeout prop usage. If cache does not exist Quarkus will grant exclusive access to the calling thread, concurrent invocations of the same method with the same key will be suspended until the current invocation returns. 
+LockTimeout tells quarkus how long to ex clusively grant access to the first non-cache hitting invocation.  
+
+Uni data-type is non blocking.  
+
+
+Messaging - producers enter data into the channel. Channel is stream of data. Consumers consume data. Data always flow from producer to consumer. Message broker can act as a producer.  
+Each channel have 1 producer and 1 consumer. Producer can make its data avalaible for sever channels therefore several consumers - this is called broadcasting.  
+
+Apache kafka - event streaming system  
+RabbitMQ - message broker.
+
+Consumer method is declared with @Incoming. Emitter is needed to create rest resource into a producer - public Asd(@Channel("my-channel") Emitter<String> emitter)... [MunityEmitter] 
+@Outgoing - defined a channel and also create the method a producer for this channel meanwhile.  
+Broadcast is still experimental (12.2025). @Broadcast (on producer [emitter] or on consumer [method]) marks that a channel has several consumers.  
+@Broadcast - makes producer use > 1 producers, @Merge - makes consumer consume > 1 producers.  
+
+Messages must always be confirmed by consumer if was processed or accepted. If the method implemented as message consumer has been run through successfully w/o an exception - this is success. if we work with messages direclty we have to take care about confirmation by ourselves.  
+For kafka acknowledgment is = offset is commited.  
+Multiple confirmations are available for chained messages via callbacks. @Acknowledgment - Quarkus handles confirmations. Virtual threads (after Java 21)?, Quarkus picks workers or I/O thread like before (in http APIs), if consumer is sync but producer is not - consumer will be executed on the very same thread that producer is running i.e. consumer will be executed on I/O thread (in our example).  
+
+@Unremovable - Quarkus removes cdi beans that are treated as not used to keep app as efficient as possible, if cdi bean does not have injection point but are used porgramatically, this is whwn we use this annotation.  
+
 
 

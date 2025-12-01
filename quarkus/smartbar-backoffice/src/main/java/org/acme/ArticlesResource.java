@@ -27,7 +27,6 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @Override
-    @Blocking
     public Response articlesArticleIdDelete(Long articleId) {
         final Optional<Article> article = articlesService.deleteById(articleId);
         if (article.isEmpty()) {
@@ -37,7 +36,6 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @Override
-    @Blocking
     public Response articlesArticleIdGet(Long articleId) {
         final Optional<Article> article = articlesService.getById(articleId);
         if (article.isEmpty()) {
@@ -47,7 +45,6 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @Override
-    @Blocking
     public Response articlesArticleIdPut(Long articleId, ApiArticle apiArticle) {
         final Optional<Article> existingArticle = articlesService.getById(articleId);
         if (existingArticle.isEmpty()) {
@@ -60,7 +57,6 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @Override
-    @Blocking
     public Response articlesGet() {
         final List<Article> articles = articlesService.listAll();
         return Response.ok(articles.stream().map(this::mapArticleToApiArticle).toList())
@@ -68,7 +64,6 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @Override
-    @Blocking
     public Response articlesPost(Long xCategoryId, ApiArticle apiArticle) {
         final Optional<Category> category = categoriesService.getById(xCategoryId);
         if(category.isEmpty()) {

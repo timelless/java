@@ -26,7 +26,6 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    @Blocking
     public Response tablesGet() {
         final List<Table> tables = tablesService.listAll();
         return Response.ok(tables.stream().map(mapper::mapToApiTable).toList())
@@ -34,7 +33,6 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    @Blocking
     public Response tablesPost(ApiTable apiTable) {
         final Table table = new Table();
         mapper.mapToTable(apiTable, table);
@@ -43,7 +41,6 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    @Blocking
     public Response tablesTableIdDelete(Long tableId) {
         final Optional<Table> table = tablesService.deleteById(tableId);
         if (table.isEmpty()) {
@@ -53,7 +50,6 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    @Blocking
     public Response tablesTableIdGet(Long tableId) {
         final Optional<Table> table = tablesService.getById(tableId);
         if (table.isEmpty()) {
@@ -63,7 +59,6 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    @Blocking
     public Response tablesTableIdPut(Long tableId, ApiTable apiTable) {
         final Optional<Table> existingTable = tablesService.getById(tableId);
         if (existingTable.isEmpty()) {

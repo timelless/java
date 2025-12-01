@@ -21,7 +21,6 @@ public class CategoriesResource implements CategoriesApi {
     }
 
     @Override
-    @Blocking
     public Response categoriesCategoryIdDelete(Long categoryId) {
         final Optional<Category> category = categoriesService.deleteById(categoryId);
         if (category.isEmpty()) {
@@ -31,7 +30,6 @@ public class CategoriesResource implements CategoriesApi {
     }
 
     @Override
-    @Blocking
     public Response categoriesCategoryIdGet(Long categoryId) {
         final Optional<Category> category = categoriesService.getById(categoryId);
         if (category.isEmpty()) {
@@ -41,7 +39,6 @@ public class CategoriesResource implements CategoriesApi {
     }
 
     @Override
-    @Blocking
     public Response categoriesCategoryIdPut(Long categoryId, ApiCategory apiCategory) {
         final Optional<Category> existingCategory = categoriesService.getById(categoryId);
         if (existingCategory.isEmpty()) {
@@ -54,7 +51,6 @@ public class CategoriesResource implements CategoriesApi {
     }
 
     @Override
-    @Blocking
     public Response categoriesGet() {
         final List<Category> categories = categoriesService.listAll();
         return Response.ok(categories.stream().map(this::mapCategoryToApiCategory).toList())
@@ -62,7 +58,6 @@ public class CategoriesResource implements CategoriesApi {
     }
 
     @Override
-    @Blocking
     public Response categoriesPost(ApiCategory apiCategory) {
         final Category category = new Category();
         mapApiCategoryToCategory(apiCategory, category);
